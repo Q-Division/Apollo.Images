@@ -27,7 +27,7 @@ namespace Apollo
 			PngLoader();
 			~PngLoader();
 
-			std::unique_ptr<Image> LoadImage(std::string path);
+			std::unique_ptr<Image> LoadImage(std::string path) override;
 
 		private:
 			bool IsValid(std::fstream& file);

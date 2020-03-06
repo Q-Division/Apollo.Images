@@ -41,7 +41,7 @@ namespace Apollo
 			/// <param name="path">Path to image file</param>
 			/// <returns>Loaded image</returns>
 			//----------------------------------------------------------
-			std::unique_ptr<Image> LoadImage(std::string path);
+			virtual std::unique_ptr<Image> LoadImage(std::string path) = 0;
 		};
 	}
 }

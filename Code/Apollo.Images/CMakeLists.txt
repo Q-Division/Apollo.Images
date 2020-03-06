@@ -27,9 +27,9 @@ message("LIBPNG: ${LIBPNG_INCLUDE_DIRS}")
 set(source_list
 	"${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt"
 	"${CMAKE_CURRENT_LIST_DIR}/Color.h"
-	"${CMAKE_CURRENT_LIST_DIR}/Image.cpp"
-	"${CMAKE_CURRENT_LIST_DIR}/Image.h"
 	"${CMAKE_CURRENT_LIST_DIR}/IImageLoader.h"
+	"${CMAKE_CURRENT_LIST_DIR}/Image.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/Image.h"	
 	"${CMAKE_CURRENT_LIST_DIR}/InvalidPngException.h"
 	"${CMAKE_CURRENT_LIST_DIR}/PixelFormat.h"
 	"${CMAKE_CURRENT_LIST_DIR}/PngHeader.h"
@@ -64,7 +64,8 @@ endif()
 #Install
 set(public_include
 	"${CMAKE_CURRENT_LIST_DIR}/Color.h"
-	"${CMAKE_CURRENT_LIST_DIR}/Image.h"
+	"${CMAKE_CURRENT_LIST_DIR}/IImageLoader.h"
+	"${CMAKE_CURRENT_LIST_DIR}/Image.h"	
 	"${CMAKE_CURRENT_LIST_DIR}/InvalidPngException.h"
 	"${CMAKE_CURRENT_LIST_DIR}/PixelFormat.h"
 	"${CMAKE_CURRENT_LIST_DIR}/PngHeader.h"
