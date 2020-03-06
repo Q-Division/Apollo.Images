@@ -14,14 +14,14 @@
 #include <memory>
 #include <string>
 #include <png.h>
-#include "Image.h"
+#include "IImageLoader.h"
 #include "PngHeader.h"
 
 namespace Apollo
 {
 	namespace Images
 	{
-		class PngLoader
+		class PngLoader : public IImageLoader
 		{
 		public:
 			PngLoader();

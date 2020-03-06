@@ -7,9 +7,9 @@ endif()
 
 if(CMAKE_COMPILER_IS_GNUCC)
 	message("Setting -fvisibility=hidden")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden")
+	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden")
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
-    SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fvisibility=hidden")
+	SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fvisibility=hidden")
 endif()
 
 message("APOLLO_ROOT: ${APOLLO_ROOT}")
@@ -29,6 +29,7 @@ set(source_list
 	"${CMAKE_CURRENT_LIST_DIR}/Color.h"
 	"${CMAKE_CURRENT_LIST_DIR}/Image.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/Image.h"
+	"${CMAKE_CURRENT_LIST_DIR}/IImageLoader.h"
 	"${CMAKE_CURRENT_LIST_DIR}/InvalidPngException.h"
 	"${CMAKE_CURRENT_LIST_DIR}/PixelFormat.h"
 	"${CMAKE_CURRENT_LIST_DIR}/PngHeader.h"
