@@ -67,7 +67,7 @@ namespace Apollo
 				EXPECT_EQ(imageformat, format);
 			}
 
-			//Get Pixel
+			//Get Pixel (RGBA)
 			TEST(ImageTest, GetPixel_RGBA)
 			{
 				//Setup
@@ -89,7 +89,7 @@ namespace Apollo
 				EXPECT_EQ(color.A, 250);
 			}
 
-			//Get Pixel
+			//Get Pixel (RGB)
 			TEST(ImageTest, GetPixel_RGB)
 			{
 				//Setup
@@ -108,6 +108,66 @@ namespace Apollo
 				EXPECT_EQ(color.G, 230);
 				EXPECT_EQ(color.B, 240);
 				EXPECT_EQ(color.A, 255);
+			}
+
+			//Get Pixel (x = width)
+			TEST(ImageTest, GetPixel_XisWidth)
+			{
+				//Setup
+				auto data = make_unique<uint8_t[]>(16);
+				auto image = make_shared<Image>(2, 2, 8, PixelFormat::R8G8B8A8, move(data));
+				const auto expectedmessage = "X >= Width";
+
+				//Run
+				auto correctexception = false;
+				
+				try
+				{
+					auto color = image->GetPixel(2, 0);
+				}
+				catch (const out_of_range& ex)
+				{
+					//Correct Exception, Check Message
+					correctexception = true;
+					
+					EXPECT_STREQ(ex.what(), expectedmessage);
+				}
+
+				if (!correctexception)
+				{
+					//Failed, wrong exception
+					FAIL();
+				}
+			}
+
+			//Get Pixel (y = height)
+			TEST(ImageTest, GetPixel_YisHeight)
+			{
+				//Setup
+				auto data = make_unique<uint8_t[]>(16);
+				auto image = make_shared<Image>(2, 2, 8, PixelFormat::R8G8B8A8, move(data));
+				const auto expectedmessage = "Y >= Height";
+
+				//Run
+				auto correctexception = false;
+				
+				try
+				{
+					auto color = image->GetPixel(0, 2);
+				}
+				catch (const out_of_range& ex)
+				{
+					//Correct Exception, Check Message
+					correctexception = true;
+				
+					EXPECT_STREQ(ex.what(), expectedmessage);
+				}
+
+				if(!correctexception)
+				{
+					//Failed, wrong exception
+					FAIL();
+				}
 			}
 		}
 	}

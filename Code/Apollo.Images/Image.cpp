@@ -10,6 +10,8 @@
 
 #include "Image.h"
 
+#include <stdexcept>
+
 using namespace std;
 using namespace Apollo::Images;
 
@@ -42,6 +44,16 @@ PixelFormat Image::GetPixelFormat() const
 
 Color Image::GetPixel(uint32_t x, uint32_t y) const
 {
+	if(x >= mWidth)
+	{
+		throw out_of_range("X >= Width");
+	}
+
+	if(y >= mHeight)
+	{
+		throw out_of_range("Y >= Height");
+	}
+	
 	if (mPixelFormat == PixelFormat::R8G8B8)
 	{
 		const uint32_t index = (y * mStride) + (x * 3);

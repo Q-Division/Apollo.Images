@@ -30,7 +30,11 @@ if(ENABLE_UNIT_TESTS)
 	message(STATUS "Unit Testing Enabled")
 endif()
 
-set(EXTERNAL_INSTALL_DIR "${CMAKE_BINARY_DIR}/external_libs/install")
+if(NOT DEFINED EXTERNAL_INSTALL_DIR)
+	set(EXTERNAL_INSTALL_DIR "${CMAKE_BINARY_DIR}/external_libs/install")
+endif()
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/external_libs")
 
 # Add Code
 include("${CMAKE_CURRENT_SOURCE_DIR}/Code/Apollo.Images.Code.cmake")
