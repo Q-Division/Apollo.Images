@@ -68,9 +68,6 @@ void PngSaver::SaveImage(Image* image, std::string path)
 	//Add Data
 	AddData(pngptr, infoptr, image, header);
 
-	//Write PNG
-	png_write_png(pngptr, infoptr, PNG_TRANSFORM_IDENTITY, nullptr);
-
 	//Cleanup
 	file.close();
 	png_destroy_write_struct(&pngptr, &infoptr);
@@ -127,8 +124,8 @@ void PngSaver::AddData(png_structp pngptr, png_infop infoptr, Image* image, PngH
 		throw InvalidPngException("Image is too wide to process in memory");
 	}
 
-	auto row_pointers = new uint8_t*[image->GetHeight()];
-
+	const auto row_pointers = new uint8_t*[image->GetHeight()];
+	
 	for (uint32_t i = 0; i < image->GetHeight(); i++)
 	{
 		row_pointers[i] = nullptr;  /* security precaution */
@@ -136,6 +133,11 @@ void PngSaver::AddData(png_structp pngptr, png_infop infoptr, Image* image, PngH
 	}
 	
 	png_set_rows(pngptr, infoptr, row_pointers);
+
+	//Write PNG
+	png_write_png(pngptr, infoptr, PNG_TRANSFORM_IDENTITY, nullptr);
+
+	delete[] row_pointers;
 }
 
 void PngSaver::ExtractPixelFormat(PixelFormat pixelformat, uint8_t& colortype, uint8_t& channels, uint8_t& channeldepth)

@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+#tmp/build/generated folders in root
+/*tmp*
+/*coverage
+/Doc

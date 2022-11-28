@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 3.1)
 project (Apollo.Images)
 
+set(CMAKE_CXX_STANDARD 17)
+
 if(NOT DEFINED APOLLO_ROOT)
 	set(APOLLO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../..")
 endif()
@@ -68,11 +70,13 @@ endif()
 set(public_include
 	"${CMAKE_CURRENT_LIST_DIR}/Color.h"
 	"${CMAKE_CURRENT_LIST_DIR}/IImageLoader.h"
+	"${CMAKE_CURRENT_LIST_DIR}/IImageSaver.h"
 	"${CMAKE_CURRENT_LIST_DIR}/Image.h"	
 	"${CMAKE_CURRENT_LIST_DIR}/InvalidPngException.h"
 	"${CMAKE_CURRENT_LIST_DIR}/PixelFormat.h"
 	"${CMAKE_CURRENT_LIST_DIR}/PngHeader.h"
 	"${CMAKE_CURRENT_LIST_DIR}/PngLoader.h"	
+	"${CMAKE_CURRENT_LIST_DIR}/PngSaver.h"	
 )
 
 set_target_properties(Apollo.Images PROPERTIES PUBLIC_HEADER "${public_include}")

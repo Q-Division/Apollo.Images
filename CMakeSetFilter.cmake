@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 3.0)
 
 function(SetFilter list srcroot)
 	foreach(source IN ITEMS ${list})
