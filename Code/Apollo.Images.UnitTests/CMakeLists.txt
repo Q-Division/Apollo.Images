@@ -27,6 +27,7 @@ set(source_list
 	"${CMAKE_CURRENT_LIST_DIR}/ImageTest.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/PathHelper.h"
 	"${CMAKE_CURRENT_LIST_DIR}/PngLoaderTest.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/PngSaverTest.cpp"
 )
 
 include_directories("${CMAKE_CURRENT_LIST_DIR}")

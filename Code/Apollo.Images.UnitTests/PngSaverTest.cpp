@@ -1,21 +1,22 @@
 //------------------------------------------------------------------------------
-// PngLoaderTest.cpp
+// PngSaverTest.cpp
 //
-// PngLoader Test Class
+// PngSaver Test Class
 //
 // Part of Apollo.Images
-// (c) 2019 Q_Division
+// (c) 2021 Q_Division
 // Distributed under MIT license. See LICENSE for details.
 //------------------------------------------------------------------------------
 
 #include "gtest/gtest.h"
 #include "Color.h"
 #include "PngLoader.h"
+#include "PngSaver.h"
 #include "InvalidPngException.h"
 #include "PathHelper.h"
 
 #ifdef _WINDOWS
-	#define LoadImage LoadImage
+	#define LoadImageA LoadImage
 #endif
 
 using namespace std;
@@ -26,8 +27,20 @@ namespace Apollo
 	{
 		namespace UnitTests
 		{
-			namespace PngLoaderTest
+			namespace PngSaverTest
 			{
+				shared_ptr<Image> Create2x2Image(PixelFormat pixelformat)
+				{
+					auto image = make_shared<Image>(2, 2, 8, pixelformat);
+
+					image->SetPixel(0, 0, { 255, 0, 0 });
+					image->SetPixel(1, 0, { 0, 255, 0 });
+					image->SetPixel(0, 1, { 0, 0, 255 });
+					image->SetPixel(1, 1, { 255, 255, 0 });
+
+					return image;
+				}
+
 				void Check2x2Image(Image* image)
 				{
 					//0,0 = Red
@@ -56,85 +69,71 @@ namespace Apollo
 				}
 
 				//RGBA 2x2
-				TEST(PngLoaderTest, RGBA_2x2)
+				TEST(PngSaverTest, RGBA_2x2)
 				{
 					//Setup
+					auto pngsaver = make_shared<PngSaver>();
 					auto pngloader = make_shared<PngLoader>();
 
 					string path = PathHelper::GetExecutablePath();
-					path = path + "/TestImages/RGBA_2x2.png";
+					path = path + "/GeneratedTestImages/RGBA_2x2.png";
+
+					auto image = Create2x2Image(PixelFormat::R8G8B8A8);
 
 					//Run
-					auto image = pngloader->LoadImage(path);
+					pngsaver->SaveImage(image.get(), path);
 
 					//Check
+					auto loadedimage = pngloader->LoadImage(path);
+
 					EXPECT_EQ(image->GetWidth(), 2);
 					EXPECT_EQ(image->GetHeight(), 2);
 					EXPECT_EQ(image->GetPixelFormat(), PixelFormat::R8G8B8A8);
-					Check2x2Image(image.get());
+					Check2x2Image(loadedimage.get());
 				}
 
 				//RGB 2x2
-				TEST(PngLoaderTest, RGB_2x2)
+				TEST(PngSaverTest, RGB_2x2)
 				{
 					//Setup
+					auto pngsaver = make_shared<PngSaver>();
 					auto pngloader = make_shared<PngLoader>();
+
 					string path = PathHelper::GetExecutablePath();
-					path = path + "/TestImages/RGB_2x2.png";
+					path = path + "/GeneratedTestImages/RGB_2x2.png";
+
+					auto image = Create2x2Image(PixelFormat::R8G8B8);
 
 					//Run
-					auto image = pngloader->LoadImage(path);
+					pngsaver->SaveImage(image.get(), path);
 
 					//Check
+					auto loadedimage = pngloader->LoadImage(path);
+
 					EXPECT_EQ(image->GetWidth(), 2);
 					EXPECT_EQ(image->GetHeight(), 2);
 					EXPECT_EQ(image->GetPixelFormat(), PixelFormat::R8G8B8);
-					Check2x2Image(image.get());
-				}
-
-				//Not A PNG
-				TEST(PngLoaderTest, NotAPng)
-				{
-					//Setup
-					auto pngloader = make_shared<PngLoader>();
-					const auto expectedmessage = "It is not a PNG file";
-
-					string path = PathHelper::GetExecutablePath();
-					path = path + "/TestImages/NotAPng.txt";
-
-					//Run
-					try
-					{
-						auto image = pngloader->LoadImage(path);
-					}
-					catch (const InvalidPngException& ex)
-					{
-						//Correct Exception, Check Message
-						EXPECT_STREQ(ex.what(), expectedmessage);
-					}
-					catch (...)
-					{
-						//Failed, wrong exception
-						FAIL();
-					}
+					Check2x2Image(loadedimage.get());
 				}
 
 				//Unsupported Pixel Format (Currently using 4bit)
-				TEST(PngLoaderTest, UnsupportedPixelFormat)
+				TEST(PngSaverTest, UnsupportedPixelFormat)
 				{
 					//Setup
-					auto pngloader = make_shared<PngLoader>();
-					const auto expectedmessage = "Invalid or Unsupported Pixel Format";
+					auto pngsaver = make_shared<PngSaver>();
+					const auto expectedmessage = "Could not extract/unsupported pixel format";
+
+					auto image = make_shared<Image>(2, 2, 8, PixelFormat::Unknown);
 
 					string path = PathHelper::GetExecutablePath();
-					path = path + "/TestImages/4bit_2x2.png";
+					path = path + "/GeneratedTestImages/Unknown_2x2.png";
 
 					//Run
 					try
 					{
-						auto image = pngloader->LoadImage(path);
+						pngsaver->SaveImage(image.get(), path);
 					}
-					catch (const InvalidPngException& ex)
+					catch (const InvalidPngException & ex)
 					{
 						//Correct Exception, Check Message
 						EXPECT_STREQ(ex.what(), expectedmessage);

@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
-// ColorTest.cpp
+// ImageTest.cpp
 //
-// Color Test Class
+// Image Test Class
 //
 // Part of Apollo.Images
 // (c) 2019 Q_Division
@@ -49,6 +49,22 @@ namespace Apollo
 
 				//Check
 				EXPECT_EQ(imageheight, height);
+			}
+
+			//Get Stride
+			TEST(ImageTest, GetStride)
+			{
+				//Setup
+				uint32_t stride = 456;
+				auto data = make_unique<uint8_t[]>(2);
+
+				auto image = make_shared<Image>(123, 345, stride, PixelFormat::R8G8B8A8, move(data));
+
+				//Run
+				auto imagestride = image->GetStride();
+
+				//Check
+				EXPECT_EQ(imagestride, stride);
 			}
 
 			//Get Pixel Format
@@ -169,6 +185,30 @@ namespace Apollo
 					FAIL();
 				}
 			}
+			
+			//Get Data
+			TEST(ImageTest, GetData_RGBA)
+			{
+				//Setup
+				auto srcdata = make_unique<uint8_t[]>(16);
+
+				for(uint8_t i = 0; i < 16; i++)
+				{
+					srcdata[i] = 250 - i;
+				}
+					
+				auto image = make_shared<Image>(2, 2, 8, PixelFormat::R8G8B8A8, move(srcdata));
+
+				//Run
+				auto imgdata = image->GetData();
+
+				//Check
+				for (uint8_t i = 0; i < 16; i++)
+				{
+					EXPECT_EQ(imgdata[i], 250 - i);		
+				}
+			}			
+			
 		}
 	}
 }

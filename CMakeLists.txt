@@ -3,7 +3,7 @@ project (Apollo.Images)
 
 include(CMakeSetFilter.cmake)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 set(APOLLO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}" CACHE INTERNAL "")
 

@@ -28,6 +28,7 @@ set(source_list
 	"${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt"
 	"${CMAKE_CURRENT_LIST_DIR}/Color.h"
 	"${CMAKE_CURRENT_LIST_DIR}/IImageLoader.h"
+	"${CMAKE_CURRENT_LIST_DIR}/IImageSaver.h"
 	"${CMAKE_CURRENT_LIST_DIR}/Image.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/Image.h"	
 	"${CMAKE_CURRENT_LIST_DIR}/InvalidPngException.h"
@@ -35,6 +36,8 @@ set(source_list
 	"${CMAKE_CURRENT_LIST_DIR}/PngHeader.h"
 	"${CMAKE_CURRENT_LIST_DIR}/PngLoader.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/PngLoader.h"	
+	"${CMAKE_CURRENT_LIST_DIR}/PngSaver.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/PngSaver.h"	
 )
 
 include_directories("${CMAKE_CURRENT_LIST_DIR}")

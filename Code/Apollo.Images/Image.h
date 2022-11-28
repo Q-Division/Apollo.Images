@@ -32,15 +32,21 @@ namespace Apollo
 
 		public:
 			Image(uint32_t width, uint32_t height, uint32_t stride,
+				PixelFormat pixelformat);
+			Image(uint32_t width, uint32_t height, uint32_t stride,
 				PixelFormat pixelformat, std::unique_ptr<uint8_t[]> data);
 			~Image();
 
 			uint32_t GetWidth() const;
 			uint32_t GetHeight() const;
+			uint32_t GetStride() const;
 
 			PixelFormat GetPixelFormat() const;
 
 			Color GetPixel(uint32_t x, uint32_t y) const;
+			void SetPixel(uint32_t x, uint32_t y, Color color);
+
+			uint8_t const* GetData() const;
 		};
 	}
 }
