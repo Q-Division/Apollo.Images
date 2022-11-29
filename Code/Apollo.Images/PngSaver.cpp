@@ -27,14 +27,17 @@ void PngSaver::SaveImage(Image* image, std::string path)
 	auto fspath = fs::path(path);
 	auto dirpath = fspath.parent_path();
 
-	fs::create_directories(dirpath);
+	if (!dirpath.empty())
+	{
+		fs::create_directories(dirpath);
+	}
 
 	//Open File
 	file.open(path.c_str(), ios::out | ios::binary);
 
 	if (!file)
 	{
-		throw exception("Failed to open file for writing");
+		throw fs::filesystem_error("Failed to open file for writing", fspath, error_code());
 	}
 
 	//Create PNG write structure
